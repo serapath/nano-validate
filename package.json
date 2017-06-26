@@ -1,0 +1,39 @@
+{
+  "name": "object-valid",
+  "version": "1.0.0",
+  "description": "tiny object validation library",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serapath/object-valid.git"
+  },
+  "keywords": [
+    "validation",
+    "argument",
+    "arguments",
+    "tiny",
+    "nano",
+    "guard",
+    "param",
+    "parameter",
+    "parameters",
+    "validate",
+    "check",
+    "args",
+    "small",
+    "valid",
+    "constraint",
+    "constraints",
+    "schema",
+    "contract"
+  ],
+  "author": "@serapath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/serapath/object-valid/issues"
+  },
+  "homepage": "https://github.com/serapath/object-valid#readme"
+}
