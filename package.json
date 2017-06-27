@@ -1,7 +1,7 @@
 {
   "name": "object-valid",
-  "version": "1.0.0",
-  "description": "tiny object validation library",
+  "version": "2.0.0",
+  "description": "tiny deep object validation library",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
@@ -28,6 +28,10 @@
     "constraint",
     "constraints",
     "schema",
+    "tree",
+    "nested",
+    "deep",
+    "nesting",
     "contract"
   ],
   "author": "@serapath",
@@ -35,5 +39,8 @@
   "bugs": {
     "url": "https://github.com/serapath/object-valid/issues"
   },
-  "homepage": "https://github.com/serapath/object-valid#readme"
+  "homepage": "https://github.com/serapath/object-valid#readme",
+  "devDependencies": {
+    "tape": "^4.7.0"
+  }
 }

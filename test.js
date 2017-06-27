@@ -2,10 +2,32 @@ var tape = require('tape')
 
 var validate = require('.')
 
+var spec_Ax = {
+  x: function isAnything (x) { return true } // property x must exist, but can be anything
+}
+
+var spec_Ay = {
+  y: {
+    b: function isFunction (x) { return typeof x === 'boolean'},
+    x: function isFunction (x) { return typeof x === 'number'},
+    z: function isFunction (x) { return typeof x === 'string'},
+    o: function isObject (x) { return typeof x === 'object' && x !== null },
+    f: function isFunction (x) { return typeof x === 'function'},
+    a: Array.isArray, // type is function name
+    u: function isUndefined (x) { return x === undefined },
+    n: function isNull (x) { return x === null }
+  }
+}
+
+var spec_B = {
+  x: { y: { z: function array3 (x) { return Array.isArray(x) && x.length > 3 } } },
+  y: function isAnything (x) { return true }
+}
+
 tape('validate foobar', function validateFoobar (t) {
-  t.plan(1)
+  t.plan(3)
   
-  var a = {
+  var A = {
     x: undefined,
     y: {
       b: false,
@@ -18,42 +40,18 @@ tape('validate foobar', function validateFoobar (t) {
       u: undefined
     }
   }
-  
-  var b = {
+
+  var B = {
     x : { y: { z: [1,2,3,4] } },
     y : function () {}
   }
+
+  var typeAx = validate(spec_Ax)
+  var typeAy = validate(spec_Ay)
+  var typeB = validate(spec_B)
   
-  t.equal(foobar(a, b), true)
+  t.doesNotThrow(_ => typeAx(A))
+  t.doesNotThrow(_ => typeAy(A))
+  t.doesNotThrow(_ => typeB(B))
   
 })
-
-function foobar (a, b) {
-  
-  var aX = (
-    validate({ x: '*' }, a), // property x must exist, but can be anything
-    a.x
-  )
-  var aY = (
-    validate({ y: {
-      b: 'boolean',
-      x: 'number',
-      z: 'string',
-      o: 'object',
-      f: 'function',
-      a: Array.isArray, // type is function name
-      u: 'undefined',
-      n: function isNull (val) { return val === null }
-    }}, a),
-    a.y
-  )
-  var b = (
-    validate({
-      x: { y: { z: arr => Array.isArray(arr) && arr.length > 3 } },
-      y: '*' // anything
-    }, b),
-    b
-  )
-
-  return true
-}

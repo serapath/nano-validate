@@ -1,5 +1,5 @@
 # object-valid
-tiny object validation library
+tiny deep object validation library
 
 # usage
 `npm install object-valid`
@@ -7,7 +7,39 @@ tiny object validation library
 ```js
 var validate = require('object-valid')
 
-var a = {
+/******************************************************************************
+  define type tester
+******************************************************************************/
+var spec_Ax = {
+  x: function isAnything (x) { return true } // property x must exist, but can be anything
+}
+
+var spec_Ay = {
+  y: {
+    b: function isFunction (x) { return typeof x === 'boolean'},
+    x: function isFunction (x) { return typeof x === 'number'},
+    z: function isFunction (x) { return typeof x === 'string'},
+    o: function isObject (x) { return typeof x === 'object' && x !== null },
+    f: function isFunction (x) { return typeof x === 'function'},
+    a: Array.isArray, // type is function name
+    u: function isUndefined (x) { return x === undefined },
+    n: function isNull (x) { return x === null }
+  }
+}
+
+var spec_B = {
+  x: { y: { z: function array3 (x) { return Array.isArray(x) && x.length > 3 } } },
+  y: function isAnything (x) { return true }
+}
+
+var typeAx = validate(spec_Ax)
+var typeAy = validate(spec_Ay)
+var typeB = validate(spec_B)
+
+/******************************************************************************
+  some objects
+******************************************************************************/
+var A = {
   x: undefined,
   y: {
     b: false,
@@ -21,26 +53,18 @@ var a = {
   }
 }
 
-var b = {
+var B = {
   x : { y: { z: [1,2,3,4] } },
   y : function () {}
 }
+/******************************************************************************
+  validate objects
+******************************************************************************/
+typeAx(A) // throws if object doesnt pass specification
+typeAy(A) // throws if object doesnt pass specification
+typeB(B) // throws if object doesnt pass specification
 
-validate({ x: '*' }, a) // property x must exist, but can be anything
-
-validate({ y: {
-  b: 'boolean',
-  x: 'number',
-  z: 'string',
-  o: 'object',
-  f: 'function',
-  a: Array.isArray, // type is function name
-  u: 'undefined',
-  n: function isNull (val) { return val === null }
-}}, a)
-
-validate({
-  x: { y: { z: arr => Array.isArray(arr) && arr.length > 3 } },
-  y: '*' // anything
-}, b)
 ```
+
+# inspired by
+* [object-validate](https://www.npmjs.com/package/object-validate)
