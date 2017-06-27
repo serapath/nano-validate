@@ -1,6 +1,6 @@
 {
   "name": "object-valid",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "tiny deep object validation library",
   "main": "index.js",
   "scripts": {

@@ -66,5 +66,8 @@ typeB(B) // throws if object doesnt pass specification
 
 ```
 
+# related
+* [x-is](https://www.npmjs.com/package/x-is) can be used to define an object spec
+
 # inspired by
 * [object-validate](https://www.npmjs.com/package/object-validate)
